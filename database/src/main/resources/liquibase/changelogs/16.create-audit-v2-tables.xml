@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+    <changeSet id="create-refactored-audit-event-table" author="defra">
+        <comment>Create AuditV2 Table for AuditV2 Schema</comment>
+        <sql>
+            CREATE TABLE Audit.AuditEvent (
+            AuditEventId UNIQUEIDENTIFIER CONSTRAINT PK_Audit_AuditEventId PRIMARY KEY DEFAULT NEWID(),
+            Action VARCHAR(256) NOT NULL,
+            ActionParams NVARCHAR(max) NOT NULL,
+            HttpCode INT NOT NULL,
+            UserId UNIQUEIDENTIFIER NOT NULL,
+            Role VARCHAR(50) NOT NULL,
+            LegalEntityIdentifier UNIQUEIDENTIFIER,
+            NetworkAddress VARCHAR(4000) NOT NULL,
+            CreatedAt DATETIME2(3) NOT NULL DEFAULT GETUTCDATE()
+            );
+        </sql>
+        <rollback>
+            DROP TABLE Audit.AuditEvent;
+        </rollback>
+    </changeSet>
+
+    <changeSet id="delete-audit-event-table" author="defra">
+        <comment>delete Event Table for Audit Schema</comment>
+        <sql>
+            DROP TABLE Audit.Event;
+        </sql>
+        <rollback>
+            CREATE TABLE Audit.Event (
+            EventId BIGINT IDENTITY NOT NULL CONSTRAINT PK_Event primary key,
+            UserId UNIQUEIDENTIFIER NULL,
+            LegalEntityIdentifier UNIQUEIDENTIFIER NULL,
+            Persona VARCHAR(256) NOT NULL CONSTRAINT FK_EventPersona_PersonaPersona REFERENCES Audit.Persona(Persona),
+            [Permission] VARCHAR(256) NOT NULL CONSTRAINT FK_EventPermission_PermissionPermission REFERENCES Audit.[Permission](Permission),
+            Action VARCHAR(256) NOT NULL CONSTRAINT FK_EventAction_ActionAction REFERENCES Audit.Action(Action),
+            Permit VARCHAR(256) NOT NULL CONSTRAINT FK_EventPermit_PermitPermit REFERENCES Audit.Permit(Permit),
+            Data VARCHAR(4000),
+            Timestamp DATETIME2(3) NOT NULL DEFAULT GETUTCDATE(),
+            NetworkAddress VARCHAR(4000)
+            );
+        </rollback>
+    </changeSet>
+
+    <changeSet id="delete_audit-action-table" author="defra">
+        <comment>Create Action Table for Audit Schema</comment>
+        <sql>
+            DROP TABLE Audit.Action;
+        </sql>
+        <rollback>
+            CREATE TABLE Audit.Action (
+            Action VARCHAR(256) NOT NULL CONSTRAINT PK_Action
+            primary key
+            );
+            INSERT INTO Audit.Action (Action)
+            VALUES
+            ('CREATE_SUBMISSION'),
+            ('VIEW_SUBMISSION'),
+            ('CLAIM_LEAD'),
+            ('REMOVE_LEAD'),
+            ('BLOCK_PARTICIPANT'),
+            ('UNBLOCK_PARTICIPANT'),
+            ('APPROVE_INTO_GROUP'),
+            ('LIST_SUBMISSIONS'),
+            ('UPLOAD_DOSSIER_FILE'),
+            ('UPLOAD_FILE'),
+            ('LIST_DOSSIERS'),
+            ('LIST_DOSSIER_ATTACHMENTS'),
+            ('DOWNLOAD_DOSSIER_FILE'),
+            ('DOWNLOAD_DOSSIER_ATTACHMENT'),
+            ('TRANSITION_DOSSIER_STATE'),
+            ('LIST_DOSSIER_STATE_TRANSITIONS'),
+            ('LIST_SUBSTANCES'),
+            ('CREATE_COMMENT'),
+            ('LIST_COMMENTS'),
+            ('CREATE_MESSAGE'),
+            ('VIEW_MESSAGE'),
+            ('LIST_MESSAGES'),
+            ('CREATE_REGISTRATION_GROUP'),
+            ('VIEW_REGISTRATION_GROUP'),
+            ('LIST_REGISTRATION_GROUPS'),
+            ('SEARCH_REGISTRATION_GROUPS'),
+            ('JOIN_REGISTRATION_GROUP'),
+            ('PROMOTE_REGISTRATION_GROUP_MEMBER'),
+            ('GENERATE_NEW_ACCESS_TOKEN'),
+            ('CREATE_DOSSIER_IN_GROUP'),
+            ('GET_LEGAL_ENTITY_IDENTIFIER'),
+            ('REGULATOR_LIST_SUBMISSIONS'),
+            ('GENERATE_NEW_ORG_TOKEN'),
+            ('GET_ACCOUNT_ID_FOR_TOKEN'),
+            ('REQUESTED_UPDATE'),
+            ('SPONTANEOUS_UPDATE'),
+            ('NOTIFY_NEW_MESSAGE'),
+            ('CHECK_SUBSTANCE_EXISTS'),
+            ('VIEW_SUBSTANCE_WITH_SUBMISSIONS'),
+            ('VALIDATE_DOSSIER'),
+            ('VIEW_DUIN'),
+            ('VIEW_ALL_DUINS'),
+            ('CREATE_DUIN'),
+            ('VIEW_CONTACT'),
+            ('NOTIFY_CC_PASS'),
+            ('ACCEPT_TERMS_AND_CONDITIONS'),
+            ('LIST_SUBMISSION_MESSAGES'),
+            ('GET_SUBSTANCE'),
+            ('DECLARE_GF_TWO_YEAR_COMPLIANCE'),
+            ('GET_SUBSTANCE_GROUP'),
+            ('TRANSFER_ASSETS'),
+            ('VIEW_TRANSFERS'),
+            ('VIEW_TRANSFER'),
+            ('DOWNLOAD_TRANSFER_SUPPORTING_EVIDENCE'),
+            ('ACCEPT_TRANSFER'),
+            ('REJECT_TRANSFER'),
+            ('INVOICE_TRANSFER'),
+            ('REGULATOR_VIEW_TRANSFERS'),
+            ('REGULATOR_VIEW_TRANSFER'),
+            ('REGULATOR_DOWNLOAD_TRANSFER_SUPPORTING_EVIDENCE'),
+            ('COMPLETE_TRANSFER'),
+            ('REQUEST_REASSIGN_LEAD'),
+            ('ACCEPT_REASSIGN_LEAD'),
+            ('REJECT_REASSIGN_LEAD'),
+            ('MOVE_PARTICIPANT_TO_SUBSTANCE'),
+            ('DOWNLOAD_PUBLIC_REGISTER_LITE'),
+            ('GET_PUBLIC_REGISTER_LITE_EXPORTS'),
+            ('EXPORT_PUBLIC_REGISTER_LITE'),
+            ('DELETE_OBSOLETE_DOSSIERS'),
+            ('CEASE_MANUFACTURING'),
+            ('MOVE_PARTICIPANT_GROUP_TYPE'),
+            ('APPROVE_INTO_INTERMEDIATE_GROUP'),
+            ('RESTART_MANUFACTURING'),
+            ('VIEW_RECENT_SUBMISSIONS'),
+            ('VIEW_DOSSIER'),
+            ('REGULATOR_LIST_SUBSTANCES')
+            ;
+        </rollback>
+    </changeSet>
+
+    <changeSet id="delete-audit-permission-table" author="defra">
+        <comment>Create Permission Table for Audit Schema</comment>
+        <sql>
+            DROP TABLE Audit.[Permission];
+        </sql>
+        <rollback>
+            CREATE TABLE Audit.[Permission] (
+            [Permission] VARCHAR(256) NOT NULL CONSTRAINT PK_Permission
+            primary key
+            );
+            INSERT INTO Audit.Permission (Permission)
+            VALUES
+            ('CREATE_DOSSIER'),
+            ('VIEW_DOSSIER'),
+            ('VIEW_SUBMISSION'),
+            ('LIST_DOSSIERS'),
+            ('LIST_SUBMISSIONS'),
+            ('UPLOAD_DOSSIER_FILE'),
+            ('UPLOAD_FILE'),
+            ('DOWNLOAD_DOSSIER_FILE'),
+            ('TRANSITION_DOSSIER_STATE'),
+            ('CREATE_COMMENT'),
+            ('LIST_COMMENTS'),
+            ('CREATE_MESSAGE'),
+            ('VIEW_MESSAGE'),
+            ('LIST_MESSAGES'),
+            ('CREATE_REGISTRATION_GROUP'),
+            ('VIEW_REGISTRATION_GROUP'),
+            ('LIST_REGISTRATION_GROUPS'),
+            ('SEARCH_REGISTRATION_GROUPS'),
+            ('JOIN_REGISTRATION_GROUP'),
+            ('PROMOTE_REGISTRATION_GROUP_MEMBER'),
+            ('GENERATE_NEW_ACCESS_TOKEN'),
+            ('CREATE_DOSSIER_IN_GROUP'),
+            ('VIEW_INDUSTRY_DASHBOARD'),
+            ('VIEW_REGULATOR_DASHBOARD'),
+            ('LIST_USER_MESSAGES'),
+            ('VIEW_REGULATOR_SUBMISSIONS'),
+            ('SEARCH_SUBSTANCES'),
+            ('VIEW_INDUSTRY_NAVBAR'),
+            ('VIEW_REGULATOR_NAVBAR'),
+            ('VIEW_SUBMISSION_MESSAGES'),
+            ('VIEW_SUBMISSION_REGULATOR_INFORMATION'),
+            ('VIEW_MANAGE_ACCOUNT_LINK'),
+            ('LIST_SUBSTANCES'),
+            ('REGULATOR_LIST_SUBMISSIONS'),
+            ('GENERATE_NEW_ORG_TOKEN'),
+            ('GET_ACCOUNT_ID_FOR_TOKEN'),
+            ('REQUESTED_UPDATE'),
+            ('SPONTANEOUS_UPDATE'),
+            ('NOTIFY_NEW_MESSAGE'),
+            ('REGULATOR_LIST_SUBSTANCES'),
+            ('VIEW_CONTACT'),
+            ('NOTIFY_CC_PASS'),
+            ('ACCEPT_TERMS_AND_CONDITIONS'),
+            ('LIST_SUBMISSION_MESSAGES'),
+            ('GET_SUBSTANCE'),
+            ('CLAIM_LEAD'),
+            ('SUBSTANCE_GROUP'),
+            ('REGULATE_SUBSTANCE_GROUP'),
+            ('APPROVE_INTO_GROUP'),
+            ('TRANSFER_ASSETS'),
+            ('REGULATE_TRANSFER_ASSETS'),
+            ('REASSIGN_LEAD'),
+            ('VIEW_CANNOT_COMPLETE_REGISTERING'),
+            ('DOWNLOAD_PUBLIC_REGISTER_LITE'),
+            ('EXPORT_PUBLIC_REGISTER_LITE'),
+            ('DELETE_OBSOLETE_DOSSIERS'),
+            ('CEASE_MANUFACTURING'),
+            ('APPROVE_INTO_INTERMEDIATE_GROUP')
+            ;
+        </rollback>
+    </changeSet>
+
+    <changeSet id="delete-audit-persona-table" author="defra">
+        <comment>Create Persona Table for Audit Schema</comment>
+        <sql>
+            DROP TABLE Audit.Persona;
+        </sql>
+        <rollback>
+            CREATE TABLE Audit.Persona (
+            Persona VARCHAR(256) NOT NULL CONSTRAINT PK_Persona
+            primary key
+            );
+            INSERT INTO Audit.Persona (Persona)
+            VALUES
+            ('REACH_MANAGER'),
+            ('REACH_READER'),
+            ('INDUSTRY_USER'),
+            ('REGULATOR'),
+            ('BACKEND')
+            ;
+        </rollback>
+    </changeSet>
+
+    <changeSet id="delete-audit-permit-table" author="defra">
+        <comment>Create Permit Table for Audit Schema</comment>
+        <sql>
+            DROP TABLE Audit.Permit;
+        </sql>
+        <rollback>
+            CREATE TABLE Audit.Permit (
+            Permit VARCHAR(256) NOT NULL CONSTRAINT PK_Permit
+            primary key
+            );
+            INSERT INTO Audit.Permit (Permit)
+            VALUES
+            ('DENIED'),
+            ('GRANTED'),
+            ('FILTERED')
+            ;
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

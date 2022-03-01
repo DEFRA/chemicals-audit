@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+  <changeSet id="add-feature-toggle-description" author="defra">
+    <comment>Add Description column to FeatureToggle table</comment>
+    <sql>
+      ALTER TABLE FeatureToggle.FeatureToggle ADD Description nvarchar(max);
+      UPDATE FeatureToggle.FeatureToggle SET Description = 'Allows users to submit grandfathered registrations' WHERE FeatureToggleName = 'CAN_SUBMIT_GRANDFATHERED';
+      UPDATE FeatureToggle.FeatureToggle SET Description = 'Allows users to claim the lead' WHERE FeatureToggleName = 'CLAIM_LEAD';
+      UPDATE FeatureToggle.FeatureToggle SET Description = 'Allows the creation of intermediate groups' WHERE FeatureToggleName = 'INTERMEDIATE_GROUPS';
+      ALTER TABLE FeatureToggle.FeatureToggle ALTER COLUMN Description nvarchar(max) NOT NULL;
+    </sql>
+    <rollback>
+      ALTER TABLE FeatureToggle.FeatureToggle DROP COLUMN Description;
+    </rollback>
+  </changeSet>
+</databaseChangeLog>

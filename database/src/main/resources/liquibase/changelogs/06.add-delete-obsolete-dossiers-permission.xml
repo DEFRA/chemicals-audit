@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+    <changeSet id="add-delete-obsolete-dossiers" author="defra">
+        <comment>Add DELETE_OBSOLETE_DOSSIERS permission and action</comment>
+        <sql>
+            INSERT INTO Audit.Action (Action) VALUES ('DELETE_OBSOLETE_DOSSIERS');
+            INSERT INTO Audit.Permission (Permission) VALUES ('DELETE_OBSOLETE_DOSSIERS');
+        </sql>
+        <rollback>
+            DELETE FROM Audit.Action WHERE Action = 'DELETE_OBSOLETE_DOSSIERS';
+            DELETE FROM Audit.Permission WHERE Permission = 'DELETE_OBSOLETE_DOSSIERS';
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

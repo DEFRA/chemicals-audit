@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+  <include file="00.create-audit-schema.xml" relativeToChangelogFile="true"/>
+  <include file="01.create-audit-tables.xml" relativeToChangelogFile="true"/>
+  <include file="02.insert-audit-reference-data.xml" relativeToChangelogFile="true"/>
+  <include file="03.tagDatabase.xml" relativeToChangelogFile="true"/>
+  <include file="05.add-export-public-register-lite-permission-action.xml" relativeToChangelogFile="true"/>
+  <include file="06.add-delete-obsolete-dossiers-permission.xml" relativeToChangelogFile="true"/>
+  <include file="07.add-backend-user-role.xml" relativeToChangelogFile="true"/>
+  <include file="08.create-feature-toggle-tables.xml" relativeToChangelogFile="true"/>
+  <include file="09.cease-manufacturing.xml" relativeToChangelogFile="true"/>
+  <include file="10.intermediate-joint-submission.xml" relativeToChangelogFile="true"/>
+  <include file="11.regulator-intermediate-approve.xml" relativeToChangelogFile="true"/>
+  <include file="12.restart-manufacturing.xml" relativeToChangelogFile="true"/>
+  <include file="13.view-recent-submissions.xml" relativeToChangelogFile="true"/>
+  <include file="14.view-dossier-action.xml" relativeToChangelogFile="true"/>
+  <include file="15.missing-regulator-list-substances.xml" relativeToChangelogFile="true"/>
+  <include file="16.create-audit-v2-tables.xml" relativeToChangelogFile="true"/>
+  <include file="17.grandfathered-feature-toggle.xml" relativeToChangelogFile="true"/>
+  <include file="18.feature-toggle-reset-for-day-one.xml" relativeToChangelogFile="true"/>
+  <include file="19.add-description-to-feature-toggles.xml" relativeToChangelogFile="true"/>
+  <include file="20.nipnots-feature-toggle.xml" relativeToChangelogFile="true"/>
+  <include file="21.update-ppord-feature-toggle.xml" relativeToChangelogFile="true"/>
+  <include file="22.remove-ppord-feature-toggle.xml" relativeToChangelogFile="true"/>
+  <include file="23.drop-feature-toggle-table-and-schema.xml" relativeToChangelogFile="true"/>
+</databaseChangeLog>

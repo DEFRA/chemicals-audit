@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+    <changeSet id="create-audit-permit-table" author="defra">
+        <comment>Create Permit Table for Audit Schema</comment>
+        <sql>
+            CREATE TABLE Audit.Permit (
+            Permit VARCHAR(256) NOT NULL CONSTRAINT PK_Permit
+            primary key
+            );
+        </sql>
+        <rollback>
+            DROP TABLE Audit.Permit;
+        </rollback>
+    </changeSet>
+    <changeSet id="create-audit-persona-table" author="defra">
+        <comment>Create Persona Table for Audit Schema</comment>
+        <sql>
+            CREATE TABLE Audit.Persona (
+            Persona VARCHAR(256) NOT NULL CONSTRAINT PK_Persona
+            primary key
+            );
+        </sql>
+        <rollback>
+            DROP TABLE Audit.Persona;
+        </rollback>
+    </changeSet>
+    <changeSet id="create-audit-permission-table" author="defra">
+        <comment>Create Permission Table for Audit Schema</comment>
+        <sql>
+            CREATE TABLE Audit.[Permission] (
+            [Permission] VARCHAR(256) NOT NULL CONSTRAINT PK_Permission
+            primary key
+            );
+        </sql>
+        <rollback>
+            DROP TABLE Audit.[Permission];
+        </rollback>
+    </changeSet>
+    <changeSet id="create_audit-action-table" author="defra">
+        <comment>Create Action Table for Audit Schema</comment>
+        <sql>
+
+            CREATE TABLE Audit.Action (
+            Action VARCHAR(256) NOT NULL CONSTRAINT PK_Action
+            primary key
+            );
+        </sql>
+        <rollback>
+            DROP TABLE Audit.Action;
+        </rollback>
+    </changeSet>
+    <changeSet id="create-audit-event-table" author="defra">
+        <comment>Create Event Table for Audit Schema</comment>
+        <sql>
+            CREATE TABLE Audit.Event (
+            EventId BIGINT IDENTITY NOT NULL CONSTRAINT PK_Event primary key,
+            UserId UNIQUEIDENTIFIER NULL,
+            LegalEntityIdentifier UNIQUEIDENTIFIER NULL,
+            Persona VARCHAR(256) NOT NULL CONSTRAINT FK_EventPersona_PersonaPersona REFERENCES Audit.Persona(Persona),
+            [Permission] VARCHAR(256) NOT NULL CONSTRAINT FK_EventPermission_PermissionPermission REFERENCES Audit.[Permission](Permission),
+            Action VARCHAR(256) NOT NULL CONSTRAINT FK_EventAction_ActionAction REFERENCES Audit.Action(Action),
+            Permit VARCHAR(256) NOT NULL CONSTRAINT FK_EventPermit_PermitPermit REFERENCES Audit.Permit(Permit),
+            Data VARCHAR(4000),
+            Timestamp DATETIME2(3) NOT NULL DEFAULT GETUTCDATE(),
+            NetworkAddress VARCHAR(4000)
+            );
+        </sql>
+        <rollback>
+            DROP TABLE Audit.Event;
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

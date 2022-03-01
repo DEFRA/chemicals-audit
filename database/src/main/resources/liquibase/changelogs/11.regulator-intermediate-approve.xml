@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+    <changeSet id="regulator-intermediate-approve" author="defra">
+        <comment>Add approve into intermediate group action</comment>
+        <sql>
+            INSERT INTO Audit.Action (Action) VALUES ('APPROVE_INTO_INTERMEDIATE_GROUP');
+            INSERT INTO Audit.Permission (Permission) VALUES ('APPROVE_INTO_INTERMEDIATE_GROUP');
+        </sql>
+        <rollback>
+            DELETE FROM Audit.Action WHERE Action = 'APPROVE_INTO_INTERMEDIATE_GROUP';
+            DELETE FROM Audit.Permission WHERE Permission = 'APPROVE_INTO_INTERMEDIATE_GROUP';
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

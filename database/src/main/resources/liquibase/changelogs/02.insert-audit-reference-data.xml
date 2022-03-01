@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+    <changeSet id="populate-AuditAction" author="defra">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM Audit.Action</sqlCheck>
+        </preConditions>
+        <comment>Inserting data into Audit Action table - see uk.gov.defra.reach.security.Action</comment>
+        <sql>
+            INSERT INTO Audit.Action (Action)
+            VALUES
+            ('CREATE_SUBMISSION'),
+            ('VIEW_SUBMISSION'),
+            ('CLAIM_LEAD'),
+            ('REMOVE_LEAD'),
+            ('BLOCK_PARTICIPANT'),
+            ('UNBLOCK_PARTICIPANT'),
+            ('APPROVE_INTO_GROUP'),
+            ('LIST_SUBMISSIONS'),
+            ('UPLOAD_DOSSIER_FILE'),
+            ('UPLOAD_FILE'),
+            ('LIST_DOSSIERS'),
+            ('LIST_DOSSIER_ATTACHMENTS'),
+            ('DOWNLOAD_DOSSIER_FILE'),
+            ('DOWNLOAD_DOSSIER_ATTACHMENT'),
+            ('TRANSITION_DOSSIER_STATE'),
+            ('LIST_DOSSIER_STATE_TRANSITIONS'),
+            ('LIST_SUBSTANCES'),
+            ('CREATE_COMMENT'),
+            ('LIST_COMMENTS'),
+            ('CREATE_MESSAGE'),
+            ('VIEW_MESSAGE'),
+            ('LIST_MESSAGES'),
+            ('CREATE_REGISTRATION_GROUP'),
+            ('VIEW_REGISTRATION_GROUP'),
+            ('LIST_REGISTRATION_GROUPS'),
+            ('SEARCH_REGISTRATION_GROUPS'),
+            ('JOIN_REGISTRATION_GROUP'),
+            ('PROMOTE_REGISTRATION_GROUP_MEMBER'),
+            ('GENERATE_NEW_ACCESS_TOKEN'),
+            ('CREATE_DOSSIER_IN_GROUP'),
+            ('GET_LEGAL_ENTITY_IDENTIFIER'),
+            ('REGULATOR_LIST_SUBMISSIONS'),
+            ('GENERATE_NEW_ORG_TOKEN'),
+            ('GET_ACCOUNT_ID_FOR_TOKEN'),
+            ('REQUESTED_UPDATE'),
+            ('SPONTANEOUS_UPDATE'),
+            ('NOTIFY_NEW_MESSAGE'),
+            ('CHECK_SUBSTANCE_EXISTS'),
+            ('VIEW_SUBSTANCE_WITH_SUBMISSIONS'),
+            ('VALIDATE_DOSSIER'),
+            ('VIEW_DUIN'),
+            ('VIEW_ALL_DUINS'),
+            ('CREATE_DUIN'),
+            ('VIEW_CONTACT'),
+            ('NOTIFY_CC_PASS'),
+            ('ACCEPT_TERMS_AND_CONDITIONS'),
+            ('LIST_SUBMISSION_MESSAGES'),
+            ('GET_SUBSTANCE'),
+            ('DECLARE_GF_TWO_YEAR_COMPLIANCE'),
+            ('GET_SUBSTANCE_GROUP'),
+            ('TRANSFER_ASSETS'),
+            ('VIEW_TRANSFERS'),
+            ('VIEW_TRANSFER'),
+            ('DOWNLOAD_TRANSFER_SUPPORTING_EVIDENCE'),
+            ('ACCEPT_TRANSFER'),
+            ('REJECT_TRANSFER'),
+            ('INVOICE_TRANSFER'),
+            ('REGULATOR_VIEW_TRANSFERS'),
+            ('REGULATOR_VIEW_TRANSFER'),
+            ('REGULATOR_DOWNLOAD_TRANSFER_SUPPORTING_EVIDENCE'),
+            ('COMPLETE_TRANSFER'),
+            ('REQUEST_REASSIGN_LEAD'),
+            ('ACCEPT_REASSIGN_LEAD'),
+            ('REJECT_REASSIGN_LEAD'),
+            ('MOVE_PARTICIPANT_TO_SUBSTANCE'),
+            ('DOWNLOAD_PUBLIC_REGISTER_LITE'),
+            ('GET_PUBLIC_REGISTER_LITE_EXPORTS')
+            ;
+        </sql>
+        <rollback>
+            DELETE FROM Audit.Action WHERE Action = 'CREATE_SUBMISSION';
+            DELETE FROM Audit.Action WHERE Action = 'VIEW_SUBMISSION';
+            DELETE FROM Audit.Action WHERE Action = 'LIST_SUBMISSIONS';
+            DELETE FROM Audit.Action WHERE Action = 'UPLOAD_DOSSIER_FILE';
+            DELETE FROM Audit.Action WHERE Action = 'UPLOAD_FILE';
+            DELETE FROM Audit.Action WHERE Action = 'LIST_DOSSIERS';
+            DELETE FROM Audit.Action WHERE Action = 'LIST_DOSSIER_ATTACHMENTS';
+            DELETE FROM Audit.Action WHERE Action = 'DOWNLOAD_DOSSIER_FILE';
+            DELETE FROM Audit.Action WHERE Action = 'DOWNLOAD_DOSSIER_ATTACHMENT';
+            DELETE FROM Audit.Action WHERE Action = 'TRANSITION_DOSSIER_STATE';
+            DELETE FROM Audit.Action WHERE Action = 'LIST_DOSSIER_STATE_TRANSITIONS';
+            DELETE FROM Audit.Action WHERE Action = 'LIST_SUBSTANCES';
+            DELETE FROM Audit.Action WHERE Action = 'CREATE_COMMENT';
+            DELETE FROM Audit.Action WHERE Action = 'LIST_COMMENTS';
+            DELETE FROM Audit.Action WHERE Action = 'CREATE_MESSAGE';
+            DELETE FROM Audit.Action WHERE Action = 'VIEW_MESSAGE';
+            DELETE FROM Audit.Action WHERE Action = 'LIST_MESSAGES';
+            DELETE FROM Audit.Action WHERE Action = 'CREATE_REGISTRATION_GROUP';
+            DELETE FROM Audit.Action WHERE Action = 'VIEW_REGISTRATION_GROUP';
+            DELETE FROM Audit.Action WHERE Action = 'LIST_REGISTRATION_GROUPS';
+            DELETE FROM Audit.Action WHERE Action = 'SEARCH_REGISTRATION_GROUPS';
+            DELETE FROM Audit.Action WHERE Action = 'JOIN_REGISTRATION_GROUP';
+            DELETE FROM Audit.Action WHERE Action = 'PROMOTE_REGISTRATION_GROUP_MEMBER';
+            DELETE FROM Audit.Action WHERE Action = 'GENERATE_NEW_ACCESS_TOKEN';
+            DELETE FROM Audit.Action WHERE Action = 'CREATE_DOSSIER_IN_GROUP';
+            DELETE FROM Audit.Action WHERE Action = 'GET_LEGAL_ENTITY_IDENTIFIER';
+            DELETE FROM Audit.Action WHERE Action = 'REGULATOR_LIST_SUBMISSIONS';
+            DELETE FROM Audit.Action WHERE Action = 'GENERATE_NEW_ORG_TOKEN';
+            DELETE FROM Audit.Action WHERE Action = 'GET_ACCOUNT_ID_FOR_TOKEN';
+            DELETE FROM Audit.Action WHERE Action = 'REQUESTED_UPDATE';
+            DELETE FROM Audit.Action WHERE Action = 'SPONTANEOUS_UPDATE';
+            DELETE FROM Audit.Action WHERE Action = 'NOTIFY_NEW_MESSAGE';
+            DELETE FROM Audit.Action WHERE Action = 'CHECK_SUBSTANCE_EXISTS';
+            DELETE FROM Audit.Action WHERE Action = 'VIEW_SUBSTANCE_WITH_SUBMISSIONS';
+            DELETE FROM Audit.Action WHERE Action = 'VALIDATE_DOSSIER';
+            DELETE FROM Audit.Action WHERE Action = 'VIEW_DUIN';
+            DELETE FROM Audit.Action WHERE Action = 'VIEW_ALL_DUINS';
+            DELETE FROM Audit.Action WHERE Action = 'CREATE_DUIN';
+            DELETE FROM Audit.Action WHERE Action = 'VIEW_CONTACT';
+            DELETE FROM Audit.Action WHERE Action = 'NOTIFY_CC_PASS';
+            DELETE FROM Audit.Action WHERE Action = 'ACCEPT_TERMS_AND_CONDITIONS';
+            DELETE FROM Audit.Action WHERE Action = 'LIST_SUBMISSION_MESSAGES';
+            DELETE FROM Audit.Action WHERE Action = 'GET_SUBSTANCE';
+            DELETE FROM Audit.Action WHERE Action = 'CLAIM_LEAD';
+            DELETE FROM Audit.Action WHERE Action = 'REMOVE_LEAD';
+            DELETE FROM Audit.Action WHERE Action = 'BLOCK_PARTICIPANT';
+            DELETE FROM Audit.Action WHERE Action = 'UNBLOCK_PARTICIPANT';
+            DELETE FROM Audit.Action WHERE Action = 'APPROVE_INTO_GROUP';
+            DELETE FROM Audit.Action WHERE Action = 'DECLARE_GF_TWO_YEAR_COMPLIANCE';
+            DELETE FROM Audit.Action WHERE Action = 'GET_SUBSTANCE_GROUP';
+            DELETE FROM Audit.Action WHERE Action = 'TRANSFER_ASSETS';
+            DELETE FROM Audit.Action WHERE Action = 'VIEW_TRANSFERS';
+            DELETE FROM Audit.Action WHERE Action = 'VIEW_TRANSFER';
+            DELETE FROM Audit.Action WHERE Action = 'DOWNLOAD_TRANSFER_SUPPORTING_EVIDENCE';
+            DELETE FROM Audit.Action WHERE Action = 'ACCEPT_TRANSFER';
+            DELETE FROM Audit.Action WHERE Action = 'REJECT_TRANSFER';
+            DELETE FROM Audit.Action WHERE Action = 'COMPLETE_TRANSFER';
+            DELETE FROM Audit.Action WHERE Action = 'REQUEST_REASSIGN_LEAD';
+            DELETE FROM Audit.Action WHERE Action = 'ACCEPT_REASSIGN_LEAD';
+            DELETE FROM Audit.Action WHERE Action = 'REJECT_REASSIGN_LEAD';
+            DELETE FROM Audit.Action WHERE Action = 'MOVE_PARTICIPANT_TO_SUBSTANCE';
+            DELETE FROM Audit.Action WHERE Action = 'DOWNLOAD_PUBLIC_REGISTER_LITE';
+            DELETE FROM Audit.Action WHERE Action = 'GET_PUBLIC_REGISTER_LITE_EXPORTS';
+        </rollback>
+    </changeSet>
+    <changeSet id="populate-AuditPermission" author="defra">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM Audit.Permission</sqlCheck>
+        </preConditions>
+        <comment>Inserting data into Audit Permission table - see uk.gov.defra.reach.security.Permission</comment>
+        <sql>
+            INSERT INTO Audit.Permission (Permission)
+            VALUES
+            ('CREATE_DOSSIER'),
+            ('VIEW_DOSSIER'),
+            ('VIEW_SUBMISSION'),
+            ('LIST_DOSSIERS'),
+            ('LIST_SUBMISSIONS'),
+            ('UPLOAD_DOSSIER_FILE'),
+            ('UPLOAD_FILE'),
+            ('DOWNLOAD_DOSSIER_FILE'),
+            ('TRANSITION_DOSSIER_STATE'),
+            ('CREATE_COMMENT'),
+            ('LIST_COMMENTS'),
+            ('CREATE_MESSAGE'),
+            ('VIEW_MESSAGE'),
+            ('LIST_MESSAGES'),
+            ('CREATE_REGISTRATION_GROUP'),
+            ('VIEW_REGISTRATION_GROUP'),
+            ('LIST_REGISTRATION_GROUPS'),
+            ('SEARCH_REGISTRATION_GROUPS'),
+            ('JOIN_REGISTRATION_GROUP'),
+            ('PROMOTE_REGISTRATION_GROUP_MEMBER'),
+            ('GENERATE_NEW_ACCESS_TOKEN'),
+            ('CREATE_DOSSIER_IN_GROUP'),
+            ('VIEW_INDUSTRY_DASHBOARD'),
+            ('VIEW_REGULATOR_DASHBOARD'),
+            ('LIST_USER_MESSAGES'),
+            ('VIEW_REGULATOR_SUBMISSIONS'),
+            ('SEARCH_SUBSTANCES'),
+            ('VIEW_INDUSTRY_NAVBAR'),
+            ('VIEW_REGULATOR_NAVBAR'),
+            ('VIEW_SUBMISSION_MESSAGES'),
+            ('VIEW_SUBMISSION_REGULATOR_INFORMATION'),
+            ('VIEW_MANAGE_ACCOUNT_LINK'),
+            ('LIST_SUBSTANCES'),
+            ('REGULATOR_LIST_SUBMISSIONS'),
+            ('GENERATE_NEW_ORG_TOKEN'),
+            ('GET_ACCOUNT_ID_FOR_TOKEN'),
+            ('REQUESTED_UPDATE'),
+            ('SPONTANEOUS_UPDATE'),
+            ('NOTIFY_NEW_MESSAGE'),
+            ('REGULATOR_LIST_SUBSTANCES'),
+            ('VIEW_CONTACT'),
+            ('NOTIFY_CC_PASS'),
+            ('ACCEPT_TERMS_AND_CONDITIONS'),
+            ('LIST_SUBMISSION_MESSAGES'),
+            ('GET_SUBSTANCE'),
+            ('CLAIM_LEAD'),
+            ('SUBSTANCE_GROUP'),
+            ('REGULATE_SUBSTANCE_GROUP'),
+            ('APPROVE_INTO_GROUP'),
+            ('TRANSFER_ASSETS'),
+            ('REGULATE_TRANSFER_ASSETS'),
+            ('REASSIGN_LEAD'),
+            ('VIEW_CANNOT_COMPLETE_REGISTERING'),
+            ('DOWNLOAD_PUBLIC_REGISTER_LITE')
+            ;
+        </sql>
+        <rollback>
+            DELETE FROM Audit.Permission WHERE Permission = 'CREATE_DOSSIER';
+            DELETE FROM Audit.Permission WHERE Permission = 'VIEW_DOSSIER';
+            DELETE FROM Audit.Permission WHERE Permission = 'VIEW_SUBMISSION';
+            DELETE FROM Audit.Permission WHERE Permission = 'LIST_DOSSIERS';
+            DELETE FROM Audit.Permission WHERE Permission = 'LIST_SUBMISSIONS';
+            DELETE FROM Audit.Permission WHERE Permission = 'UPLOAD_DOSSIER_FILE';
+            DELETE FROM Audit.Permission WHERE Permission = 'UPLOAD_FILE';
+            DELETE FROM Audit.Permission WHERE Permission = 'DOWNLOAD_DOSSIER_FILE';
+            DELETE FROM Audit.Permission WHERE Permission = 'TRANSITION_DOSSIER_STATE';
+            DELETE FROM Audit.Permission WHERE Permission = 'CREATE_COMMENT';
+            DELETE FROM Audit.Permission WHERE Permission = 'LIST_COMMENTS';
+            DELETE FROM Audit.Permission WHERE Permission = 'CREATE_MESSAGE';
+            DELETE FROM Audit.Permission WHERE Permission = 'VIEW_MESSAGE';
+            DELETE FROM Audit.Permission WHERE Permission = 'LIST_MESSAGES';
+            DELETE FROM Audit.Permission WHERE Permission = 'CREATE_REGISTRATION_GROUP';
+            DELETE FROM Audit.Permission WHERE Permission = 'VIEW_REGISTRATION_GROUP';
+            DELETE FROM Audit.Permission WHERE Permission = 'LIST_REGISTRATION_GROUPS';
+            DELETE FROM Audit.Permission WHERE Permission = 'SEARCH_REGISTRATION_GROUPS';
+            DELETE FROM Audit.Permission WHERE Permission = 'JOIN_REGISTRATION_GROUP';
+            DELETE FROM Audit.Permission WHERE Permission = 'PROMOTE_REGISTRATION_GROUP_MEMBER';
+            DELETE FROM Audit.Permission WHERE Permission = 'GENERATE_NEW_ACCESS_TOKEN';
+            DELETE FROM Audit.Permission WHERE Permission = 'CREATE_DOSSIER_IN_GROUP';
+            DELETE FROM Audit.Permission WHERE Permission = 'VIEW_INDUSTRY_DASHBOARD';
+            DELETE FROM Audit.Permission WHERE Permission = 'VIEW_REGULATOR_DASHBOARD';
+            DELETE FROM Audit.Permission WHERE Permission = 'LIST_USER_MESSAGES';
+            DELETE FROM Audit.Permission WHERE Permission = 'VIEW_REGULATOR_SUBMISSIONS';
+            DELETE FROM Audit.Permission WHERE Permission = 'SEARCH_SUBSTANCES';
+            DELETE FROM Audit.Permission WHERE Permission = 'VIEW_INDUSTRY_NAVBAR';
+            DELETE FROM Audit.Permission WHERE Permission = 'VIEW_REGULATOR_NAVBAR';
+            DELETE FROM Audit.Permission WHERE Permission = 'VIEW_SUBMISSION_MESSAGES';
+            DELETE FROM Audit.Permission WHERE Permission = 'VIEW_SUBMISSION_REGULATOR_INFORMATION';
+            DELETE FROM Audit.Permission WHERE Permission = 'VIEW_MANAGE_ACCOUNT_LINK';
+            DELETE FROM Audit.Permission WHERE Permission = 'LIST_SUBSTANCES';
+            DELETE FROM Audit.Permission WHERE Permission = 'REGULATOR_LIST_SUBMISSIONS';
+            DELETE FROM Audit.Permission WHERE Permission = 'GENERATE_NEW_ORG_TOKEN';
+            DELETE FROM Audit.Permission WHERE Permission = 'GET_ACCOUNT_ID_FOR_TOKEN';
+            DELETE FROM Audit.Permission WHERE Permission = 'REQUESTED_UPDATE';
+            DELETE FROM Audit.Permission WHERE Permission = 'SPONTANEOUS_UPDATE';
+            DELETE FROM Audit.Permission WHERE Permission = 'NOTIFY_NEW_MESSAGE';
+            DELETE FROM Audit.Permission WHERE Permission = 'REGULATOR_LIST_SUBSTANCES';
+            DELETE FROM Audit.Permission WHERE Permission = 'VIEW_CONTACT';
+            DELETE FROM Audit.Permission WHERE Permission = 'NOTIFY_CC_PASS';
+            DELETE FROM Audit.Permission WHERE Permission = 'ACCEPT_TERMS_AND_CONDITIONS';
+            DELETE FROM Audit.Permission WHERE Permission = 'LIST_SUBMISSION_MESSAGES';
+            DELETE FROM Audit.Permission WHERE Permission = 'GET_SUBSTANCE';
+            DELETE FROM Audit.Permission WHERE Permission = 'CLAIM_LEAD';
+            DELETE FROM Audit.Permission WHERE Permission = 'SUBSTANCE_GROUP';
+            DELETE FROM Audit.Permission WHERE Permission = 'REGULATE_SUBSTANCE_GROUP';
+            DELETE FROM Audit.Permission WHERE Permission = 'APPROVE_INTO_GROUP';
+            DELETE FROM Audit.Permission WHERE Permission = 'TRANSFER_ASSETS';
+            DELETE FROM Audit.Permission WHERE Permission = 'REGULATE_TRANSFER_ASSETS';
+            DELETE FROM Audit.Permission WHERE Permission = 'REASSIGN_LEAD';
+            DELETE FROM Audit.Permission WHERE Permission = 'VIEW_CANNOT_COMPLETE_REGISTERING';
+            DELETE FROM Audit.Permission WHERE Permission = 'DOWNLOAD_PUBLIC_REGISTER_LITE';
+        </rollback>
+    </changeSet>
+    <changeSet id="populate-AuditPersona" author="defra">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT COUNT(*) FROM Audit.Persona</sqlCheck>
+        </preConditions>
+        <comment>Inserting data into Audit Persona table - see uk.gov.defra.reach.security.Persona</comment>
+        <sql>
+            INSERT INTO Audit.Persona (Persona)
+            VALUES
+            ('REACH_MANAGER'),
+            ('REACH_READER'),
+            ('INDUSTRY_USER'),
+            ('REGULATOR')
+            ;
+        </sql>
+        <rollback>
+            DELETE FROM Audit.Persona WHERE Persona = 'REACH_MANAGER';
+            DELETE FROM Audit.Persona WHERE Persona = 'REACH_READER';
+            DELETE FROM Audit.Persona WHERE Persona = 'INDUSTRY_USER';
+            DELETE FROM Audit.Persona WHERE Persona = 'REGULATOR';
+        </rollback>
+    </changeSet>
+    <changeSet id="populate-AuditPermit" author="defra">
+  <preConditions onFail="MARK_RAN">
+    <sqlCheck expectedResult="0">SELECT COUNT(*) FROM Audit.Permit</sqlCheck>
+  </preConditions>
+  <comment>Inserting data into Audit Permit table - see uk.gov.defra.reach.security.Permit</comment>
+  <sql>
+    INSERT INTO Audit.Permit (Permit)
+    VALUES
+    ('DENIED'),
+    ('GRANTED'),
+    ('FILTERED')
+    ;
+  </sql>
+  <rollback>
+    DELETE FROM Audit.Permit WHERE Permit = 'DENIED';
+    DELETE FROM Audit.Permit WHERE Permit = 'GRANTED';
+    DELETE FROM Audit.Permit WHERE Permit = 'FILTERED';
+  </rollback>
+</changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+    <changeSet id="drop-feature-toggle-table-and-schema" author="defra">
+        <comment>Drop feature Toggle Table and Schema</comment>
+        <sql>
+            DROP TABLE FeatureToggle.FeatureToggle;
+
+            DROP SCHEMA IF EXISTS FeatureToggle;
+        </sql>
+        <rollback>
+            CREATE SCHEMA FeatureToggle;
+
+            CREATE TABLE FeatureToggle.FeatureToggle (
+            FeatureToggleId UNIQUEIDENTIFIER CONSTRAINT PK_FeatureToggle_FeatureToggleId PRIMARY KEY DEFAULT NEWID(),
+            FeatureToggleName VARCHAR(100) NOT NULL,
+            Enabled BIT,
+            FeatureToggleActivationStrategy NVARCHAR(max) NOT NULL,
+            Description nvarchar(max) NOT NULL
+            );
+
+            CREATE UNIQUE INDEX UIDX_FeatureToggle_FeatureToggleName ON FeatureToggle.FeatureToggle(FeatureToggleName);
+
+            INSERT INTO FeatureToggle.FeatureToggle (FeatureToggleName, Enabled, FeatureToggleActivationStrategy, Description)
+            VALUES ('CLAIM_LEAD', 1, '{ "@type": "FROM_DATE", "dateActiveFrom": "2021-05-01" }', 'Allows users to claim the lead');
+
+            INSERT INTO FeatureToggle.FeatureToggle (FeatureToggleName, Enabled, FeatureToggleActivationStrategy, Description)
+            VALUES ('INTERMEDIATE_GROUPS', 1, '{ "@type": "FROM_DATE", "dateActiveFrom": "2021-05-01" }', 'Allows the creation of intermediate groups');
+
+            INSERT INTO FeatureToggle.FeatureToggle (FeatureToggleName, Enabled, FeatureToggleActivationStrategy, Description)
+            VALUES ('CAN_SUBMIT_GRANDFATHERED', 1, '{"@type":"SIMPLE"}', 'Allows users to submit grandfathered registrations');
+
+            INSERT INTO FeatureToggle.FeatureToggle (FeatureToggleName, Enabled, FeatureToggleActivationStrategy, Description)
+            VALUES ('NIPNOTS', 1, '{"@type":"SIMPLE"}', 'Allows users to access NIPNOTS functionality');
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+    <changeSet id="add-export-public-register-lite" author="defra">
+        <comment>Add EXPORT_PUBLIC_REGISTER_LITE permission and action</comment>
+        <sql>
+            INSERT INTO Audit.Action (Action) VALUES ('EXPORT_PUBLIC_REGISTER_LITE');
+            INSERT INTO Audit.Permission (Permission) VALUES ('EXPORT_PUBLIC_REGISTER_LITE');
+        </sql>
+        <rollback>
+            DELETE FROM Audit.Action WHERE Action = 'EXPORT_PUBLIC_REGISTER_LITE';
+            DELETE FROM Audit.Permission WHERE Permission = 'EXPORT_PUBLIC_REGISTER_LITE';
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+    <changeSet id="create-Feature-Toggle-Schema" author="defra">
+        <comment>
+            Create Feature Toggle Schema
+        </comment>
+        <sql>
+            CREATE SCHEMA FeatureToggle;
+        </sql>
+        <rollback>
+            DROP SCHEMA FeatureToggle;
+        </rollback>
+    </changeSet>
+
+    <changeSet id="create-feature-toggle-table" author="defra">
+        <comment>Create Feature Toggle Table for Feature Toggle Schema</comment>
+        <sql>
+            CREATE TABLE FeatureToggle.FeatureToggle (
+            FeatureToggleId UNIQUEIDENTIFIER CONSTRAINT PK_FeatureToggle_FeatureToggleId PRIMARY KEY DEFAULT NEWID(),
+            FeatureToggleName VARCHAR(100) NOT NULL,
+            Enabled BIT,
+            FeatureToggleActivationStrategy NVARCHAR(max) NOT NULL,
+            );
+        </sql>
+        <rollback>
+            DROP TABLE FeatureToggle.FeatureToggle;
+        </rollback>
+    </changeSet>
+
+    <changeSet id="create-reach-constraints" author="defra">
+        <comment>Create Tables Constraints and Indexes</comment>
+        <sql>
+            CREATE UNIQUE INDEX UIDX_FeatureToggle_FeatureToggleName ON FeatureToggle.FeatureToggle(FeatureToggleName);
+        </sql>
+        <rollback>
+            DROP INDEX UIDX_FeatureToggle_FeatureToggleName ON FeatureToggle.FeatureToggle;
+        </rollback>
+    </changeSet>
+
+    <changeSet id="insert-feature-toggle-data" author="defra">
+        <comment>Insert feature data</comment>
+        <sql>
+            INSERT INTO FeatureToggle.FeatureToggle (FeatureToggleName, Enabled, FeatureToggleActivationStrategy)
+            VALUES ('CLAIM_LEAD', 1, '{ "@type": "FROM_DATE", "dateActiveFrom": "2020-06-01" }');
+        </sql>
+        <rollback>
+            DELETE FROM FeatureToggle.FeatureToggle WHERE FeatureToggleName = 'CLAIM_LEAD';
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

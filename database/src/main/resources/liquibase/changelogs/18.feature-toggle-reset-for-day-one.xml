@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+    <changeSet id="grandfathered-feature-toggle" author="defra">
+        <comment>Change date on feature toggles</comment>
+        <sql>
+            UPDATE FeatureToggle.FeatureToggle
+            SET FeatureToggleActivationStrategy = '{ "@type": "FROM_DATE", "dateActiveFrom": "2021-05-01" }'
+            WHERE FeatureToggleName = 'CLAIM_LEAD';
+
+            UPDATE FeatureToggle.FeatureToggle
+            SET FeatureToggleActivationStrategy = '{ "@type": "FROM_DATE", "dateActiveFrom": "2021-05-01" }'
+            WHERE FeatureToggleName = 'INTERMEDIATE_GROUPS';
+        </sql>
+       <rollback>
+           UPDATE FeatureToggle.FeatureToggle
+           SET FeatureToggleActivationStrategy = '{ "@type": "FROM_DATE", "dateActiveFrom": "2020-06-01" }'
+           WHERE FeatureToggleName = 'CLAIM_LEAD';
+
+           UPDATE FeatureToggle.FeatureToggle
+           SET FeatureToggleActivationStrategy = '{ "@type": "FROM_DATE", "dateActiveFrom": "2020-06-01" }'
+           WHERE FeatureToggleName = 'INTERMEDIATE_GROUPS';
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
