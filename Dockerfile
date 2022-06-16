@@ -17,4 +17,4 @@ USER jreuser
 EXPOSE 8094
 
 CMD java -javaagent:/usr/src/reach-audit/applicationinsights-agent.jar \
--Xmx${JAVA_MX:-1024M} -Xms${JAVA_MS:-1024M} -jar reach-audit.jar
+-Xmx${JAVA_MX:-512M} -Xms${JAVA_MS:-256M} -jar reach-audit.jar

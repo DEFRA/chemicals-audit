@@ -5,7 +5,7 @@
   <parent>
     <groupId>uk.gov.defra.reach.spring</groupId>
     <artifactId>reach-spring-parent</artifactId>
-    <version>1.6.0</version>
+    <version>1.10.0</version>
   </parent>
   <groupId>uk.gov.defra.reach.audit</groupId>
   <artifactId>reach-audit</artifactId>
@@ -14,9 +14,8 @@
   <description>REACH Audit</description>
   <properties>
     <java.version>11</java.version>
-    <revision>1.1.0</revision>
+    <revision>1.2.0</revision>
     <changelist></changelist>
-    <failBuildOnCVSS>4</failBuildOnCVSS>
     <artifactory.url>https://artifactoryv2.azure.defra.cloud/artifactory/CHM-Maven</artifactory.url>
     <jacoco-maven-plugin.version>0.8.5</jacoco-maven-plugin.version>
   </properties>
@@ -24,20 +23,17 @@
     <dependency>
       <groupId>uk.gov.defra.reach.spring</groupId>
       <artifactId>reach-spring-starter</artifactId>
-      <version>1.6.0</version>
+      <version>1.8.0</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-data-jpa</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.liquibase</groupId>
-      <artifactId>liquibase-core</artifactId>
-    </dependency>
+
     <dependency>
       <groupId>com.microsoft.sqlserver</groupId>
       <artifactId>mssql-jdbc</artifactId>
-      <version>9.4.0.jre11</version>
+      <version>9.4.1.jre11</version>
     </dependency>
     <dependency>
       <groupId>com.azure</groupId>
